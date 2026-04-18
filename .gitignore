@@ -1,0 +1,5 @@
+#Abaikan hasil kompilasi java
+*.class
+
+.vscode/
+.idea/
