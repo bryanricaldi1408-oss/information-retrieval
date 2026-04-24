@@ -2,33 +2,26 @@ package indexer;
 
 import java.util.*;
 
-import model.Document;
 
 public class Indexer {
 
-  public Map<String, List<Integer>> buildInvertedIndex(List<Document> docs) {
+  public Map<String, List<Integer>> buildInvertedIndex(Map<Integer, List<String>> docs) {
 
     Map<String, List<Integer>> invertedIndex = new HashMap<>();
 
-    for (Document doc : docs) {
-      String rawText = doc.content;
-      String lowerCaseText = rawText.toLowerCase();
+    for (Integer docId : docs.keySet()) {
 
-      String cleanText = lowerCaseText.replaceAll("[^a-z\\s]", "");
-      String[] tokens = cleanText.split("\\s+");
-
-      for (String t : tokens) {
+      for(String t : docs.get(docId)){
         if (!invertedIndex.containsKey(t)) {
           List<Integer> postingList = new ArrayList<>();
-          postingList.add(doc.id);
+          postingList.add(docId);
 
           invertedIndex.put(t, postingList);
         } else {
           List<Integer> updatedPostings = invertedIndex.get(t);
 
-          Integer lastDocId = updatedPostings.get(updatedPostings.size() - 1);
-          if (!lastDocId.equals(doc.id)) {
-            updatedPostings.add(doc.id);
+          if (!updatedPostings.contains(docId)) {
+            updatedPostings.add(docId);
           }
         }
       }
