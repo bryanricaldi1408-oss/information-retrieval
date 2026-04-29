@@ -68,8 +68,10 @@ public class BooleanQueryEngine {
         Queue<String> outputQueue  = new LinkedList<>();  // hasil postfix
         Deque<String> operatorStack = new ArrayDeque<>(); // stack operator sementara
 
-        for (String token : tokens) {
-
+        for (String raw : tokens) {
+            // Normalisasi: operator selalu uppercase agar PRIORITY.get() tidak null
+            String token = isOperator(raw) ? raw.toUpperCase() : raw;
+ 
             if (isOperator(token)) {
                 // Sebelum push, pop operator lama yang prioritasnya >= token ini
                 // (karena operator dengan prioritas lebih tinggi harus dikerjakan dulu)
@@ -79,11 +81,11 @@ public class BooleanQueryEngine {
                     outputQueue.add(operatorStack.pop());
                 }
                 operatorStack.push(token);
-
+ 
             } else if (token.equals("(")) {
                 // Kurung buka: langsung push, jadi "pembatas" di stack
                 operatorStack.push(token);
-
+ 
             } else if (token.equals(")")) {
                 // Kurung tutup: pop semua operator sampai ketemu "("
                 while (!operatorStack.isEmpty() && !operatorStack.peek().equals("(")) {
@@ -92,7 +94,7 @@ public class BooleanQueryEngine {
                 if (!operatorStack.isEmpty()) {
                     operatorStack.pop(); // buang "(" dari stack (jangan masuk queue)
                 }
-
+ 
             } else {
                 // Term biasa: langsung masuk output queue
                 outputQueue.add(token);
