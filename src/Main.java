@@ -1,16 +1,27 @@
 import indexer.Indexer;
 import utils.FileReaderUtil;
 import model.Document;
-import preprocessing.PorterStemmer;
 import preprocessing.TokenizerAndStemmer;
 import query.BooleanQueryEngine;
 
 import java.util.*;
 
+/**
+ * Class ini mengatur pembacaan dokumen, pra-pemrosesan (tokenisasi dan
+ * stemming),
+ * pembuatan inverted index, dan eksekusi mesin pencari (query engine).
+ */
 public class Main {
+    /**
+     * Method utama untuk menjalankan alur program Information Retrieval.
+     * Method ini membaca dataset, memproses dokumen, membangun indeks, dan memulai
+     * antarmuka
+     *
+     * @param args argumen baris perintah (tidak digunakan)
+     */
     public static void main(String[] args) {
 
-        String folderPath = "information-retrieval/dataset/Cranfield";
+        String folderPath = "../dataset/Cranfield";
 
         FileReaderUtil fr = new FileReaderUtil();
         List<Document> docs = fr.readAllDocuments(folderPath);
@@ -22,25 +33,17 @@ public class Main {
 
         Indexer in = new Indexer();
         Map<String, List<Integer>> invertedIndex = in.buildInvertedIndex(stemmedDoc);
-        /*
-        invertedIndex.forEach((key, value) -> {
-
-            System.out.printf("[%s] -> {%s}\n", key, value.toString());
-        });
-        */
 
         Scanner sc = new Scanner(System.in);
 
         int totalDocs = docs.size();
         BooleanQueryEngine engine = new BooleanQueryEngine(invertedIndex, totalDocs);
 
-        //ini buat debug
-        //System.out.println("Jumlah dokumen: " + docs.size());
-
         while (true) {
             System.out.print("Query: ");
             String input = sc.nextLine().trim();
-            if ("exit".equalsIgnoreCase(input)) break;
+            if ("exit".equalsIgnoreCase(input))
+                break;
             try {
                 List<Integer> result = engine.search(input);
                 System.out.println("Hasil: " + (result.isEmpty() ? "(tidak ada hasil)" : result));
