@@ -3,7 +3,7 @@
 | NPM | Nama Anggota | Peran | Tugas Utama |
 |---|---|---|---|
 | 6182301013 | Bryan Ricaldi | Data & Indexing Engineer | Text preprocessing & membangun Inverted Index |
-| isi npm | Robert Saputra | Boolean Engine Developer | Query parser & eksekusi logika Boolean |
+| 6182301080 | Robert Saputra | Boolean Engine Developer | Query parser & eksekusi logika Boolean |
 | isi npm | Bima Rahmadani | Tolerant Retrieval Specialist| Menangani wildcard & spelling correction |
 
 # Dataset
@@ -24,7 +24,7 @@ https://www.kaggle.com/datasets/hhhoang/cranfield-dataset?resource=download
    javac Main.java
    java Main
 
-3. Masukan query yang di inginkan menggunakan operator boolean (AND, OR, NOT):  
+3. Masukan query yang di inginkan menggunakan operator boolean (AND, OR, NOT, ( , ) ):  
    Contoh:
    ```
    Query: drag AND calculations
