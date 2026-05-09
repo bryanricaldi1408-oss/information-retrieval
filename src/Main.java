@@ -51,6 +51,7 @@ public class Main {
                     System.out.printf("Term %s not found, searched for %s\n", key,value);
                 });
                 System.out.println("Hasil: " + (result.isEmpty() ? "(tidak ada hasil)" : result));
+                engine.resetReplacements();
             } catch (IllegalArgumentException e) {
                 System.out.println("Query tidak valid: " + e.getMessage());
             }

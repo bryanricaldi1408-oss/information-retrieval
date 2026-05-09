@@ -52,6 +52,9 @@ public class BooleanQueryEngine {
     public Map<String,String> getReplacements(){
         return this.replacements;
     }
+    public void resetReplacements(){
+        this.replacements = new HashMap<>();
+    }
 
     public List<Integer> search(String query) {
         if (query == null || query.trim().isEmpty()) return new ArrayList<>();
@@ -242,16 +245,16 @@ public class BooleanQueryEngine {
         for(int i=0;i<previous.length;i++){
             previous[i]=i;
         }
-        for(int i=0;i<=s2.length();i++){
+        for(int i=0;i<s2.length();i++){
             int[] next = new int[previous.length];
             next[0] = previous[0]+1;
             for(int j=0;j<s1.length();j++){
-                next[j+1]=previous[j];
-                if(s2.charAt(i)!=s1.charAt(j)){
-                    //membandingkan previous [j+1], previous[j] dan next[j]
-                    next[j+1] = Math.min(next[j+1],previous[j+1]);
+                if(s2.charAt(i)==s1.charAt(j)) next[j+1]=previous[j];
+                else{
+                    //mengambil angka paling kecil dari opsi sebelum aksi diambil
+                    next[j+1] = Math.min(previous[j],previous[j+1]);
                     next[j+1] = Math.min(next[j+1],next[j]);
-                    //menambah 1 untuk melakukan aksinya
+                    //menambah 1 untuk action yang diambil
                     next[j+1]++;
                 }
             }
