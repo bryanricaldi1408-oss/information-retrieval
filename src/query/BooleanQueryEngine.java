@@ -1,7 +1,7 @@
 package query;
 
-import preprocessing.PorterStemmer;
 import java.util.*;
+import preprocessing.PorterStemmer;
 
 /*
  * Cara kerja:
@@ -31,6 +31,8 @@ public class BooleanQueryEngine {
     private final int totalDocs;
     private final PorterStemmer stemmer;
 
+    private Map<String,String> replacements;
+
     // Prioritas operator (semakin besar angka, semakin tinggi prioritas)
     // NOT > AND > OR 
     private static final Map<String, Integer> PRIORITY = new HashMap<>();
@@ -44,6 +46,14 @@ public class BooleanQueryEngine {
         this.invertedIndex = invertedIndex;
         this.totalDocs = totalDocs;
         this.stemmer = new PorterStemmer();
+
+        this.replacements = new HashMap<>();
+    }
+    public Map<String,String> getReplacements(){
+        return this.replacements;
+    }
+    public void resetReplacements(){
+        this.replacements = new HashMap<>();
     }
 
     public List<Integer> search(String query) {
@@ -210,6 +220,47 @@ public class BooleanQueryEngine {
     private List<Integer> getPostingList(String term) {
         String stemmed = stemmer.stem(term.toLowerCase());
         List<Integer> result = invertedIndex.get(stemmed);
+        //tolerant, mencari kata yang terdekat
+        if (result==null){
+            String closestTerm = closest(stemmed);
+            this.replacements.put(term, closestTerm);
+            result = invertedIndex.get(closestTerm);
+        }
         return result != null ? new ArrayList<>(result) : new ArrayList<>();
+    }
+    private String closest(String term){
+        int best=Integer.MAX_VALUE;
+        String bestCandidate="";
+        for(String candidate: this.invertedIndex.keySet()){
+            int distance = levenshteinDistance(term,candidate);
+            if (distance<best){
+                best = distance;
+                bestCandidate=candidate;
+            }
+        }
+        return bestCandidate;
+    }
+    private int levenshteinDistance(String s1, String s2){
+        int[] previous = new int[s1.length()+1];
+        for(int i=0;i<previous.length;i++){
+            previous[i]=i;
+        }
+        for(int i=0;i<s2.length();i++){
+            int[] next = new int[previous.length];
+            next[0] = previous[0]+1;
+            for(int j=0;j<s1.length();j++){
+                if(s2.charAt(i)==s1.charAt(j)) next[j+1]=previous[j];
+                else{
+                    //mengambil angka paling kecil dari opsi sebelum aksi diambil
+                    next[j+1] = Math.min(previous[j],previous[j+1]);
+                    next[j+1] = Math.min(next[j+1],next[j]);
+                    //menambah 1 untuk action yang diambil
+                    next[j+1]++;
+                }
+            }
+            previous=next;
+        }
+        
+        return previous[s1.length()];
     }
 }

@@ -1,10 +1,9 @@
 import indexer.Indexer;
-import utils.FileReaderUtil;
+import java.util.*;
 import model.Document;
 import preprocessing.TokenizerAndStemmer;
 import query.BooleanQueryEngine;
-
-import java.util.*;
+import utils.FileReaderUtil;
 
 /**
  * Class ini mengatur pembacaan dokumen, pra-pemrosesan (tokenisasi dan
@@ -46,7 +45,13 @@ public class Main {
                 break;
             try {
                 List<Integer> result = engine.search(input);
+                //hasil setelah replacement term yang tidak ditemukan dengan levenshtein distance
+                Map<String,String> replacements = engine.getReplacements();
+                replacements.forEach((key,value)->{
+                    System.out.printf("Term %s not found, searched for %s\n", key,value);
+                });
                 System.out.println("Hasil: " + (result.isEmpty() ? "(tidak ada hasil)" : result));
+                engine.resetReplacements();
             } catch (IllegalArgumentException e) {
                 System.out.println("Query tidak valid: " + e.getMessage());
             }
