@@ -42,25 +42,30 @@ public class PorterStemmer {
     }
 
     public String step1b(String word) {
+        boolean secondPreq = false;
+        boolean thirdPreq = false;
         if (word.endsWith("eed")) {
             if (measure(word.substring(0, word.length() - 3)) > 0) {
                 word = word.substring(0, word.length() - 1);
             }
         } else if (word.endsWith("ed") && containVowel(word.substring(0, word.length() - 2))) {
+            secondPreq = true;
             word = word.substring(0, word.length() - 2);
         } else if (word.endsWith("ing") && containVowel(word.substring(0, word.length() - 3))) {
+            thirdPreq = true;
             word = word.substring(0, word.length() - 3);
         }
 
-        // Setelah penghapusan
-        if (word.endsWith("at") || word.endsWith("bl") || word.endsWith("iz")) {
-            word = word + "e";
-        } else if (doubleConsonant(word) && !(word.endsWith("l") || word.endsWith("s") || word.endsWith("z"))) {
-            word = word.substring(0, word.length() - 1);
-        } else if (measure(word) == 1 && endsWithCVC(word)) {
-            word = word + "e";
+        // Jika syarat kedua atau syarat ketiga terpenuhi maka
+        if(secondPreq || thirdPreq){
+            if (word.endsWith("at") || word.endsWith("bl") || word.endsWith("iz")) {
+                word = word + "e";
+            } else if (doubleConsonant(word) && !(word.endsWith("l") || word.endsWith("s") || word.endsWith("z"))) {
+                word = word.substring(0, word.length() - 1);
+            } else if (measure(word) == 1 && endsWithCVC(word)) {
+                word = word + "e";
+            }
         }
-
         return word;
     }
 
