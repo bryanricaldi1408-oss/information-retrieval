@@ -4,13 +4,12 @@
 |---|---|---|---|
 | 6182301013 | Bryan Ricaldi | Data & Indexing Engineer | Text preprocessing & membangun Inverted Index |
 | 6182301080 | Robert Saputra | Boolean Engine Developer | Query parser & eksekusi logika Boolean |
-| isi npm | Bima Rahmadani | Tolerant Retrieval Specialist| Menangani wildcard & spelling correction |
+| 6182301094 | Bima Rahmadani | Tolerant Retrieval Specialist| Menangani wildcard & spelling correction |
 
 # Dataset
-Berikut merupakan dataset yang kami gunakan
-```
+Berikut merupakan dataset yang kami gunakan  
 https://www.kaggle.com/datasets/hhhoang/cranfield-dataset?resource=download
-```
+
 # Cara Menjalankan Program
 
 1. Masuk ke dalam folder `src` dengan perintah berikut:
@@ -31,4 +30,7 @@ https://www.kaggle.com/datasets/hhhoang/cranfield-dataset?resource=download
    Hasil: [147, 163, 179, 188, 227, 235, 246, 248, 263, 279]
    ```
    **Note:** Penggunaan huruf kapital atau tidak dalam penulisan operator boolean tidak berpengaruh pada hasil pencarian.
+
+4. Untuk keluar dari progam ketik exit. Untuk mencari kata "exit" harus menggunakan
+   (exit)  
   
