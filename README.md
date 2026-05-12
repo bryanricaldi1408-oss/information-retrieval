@@ -4,7 +4,7 @@
 |---|---|---|---|
 | 6182301013 | Bryan Ricaldi | Data & Indexing Engineer | Text preprocessing & membangun Inverted Index |
 | 6182301080 | Robert Saputra | Boolean Engine Developer | Query parser & eksekusi logika Boolean |
-| 6182301094 | Bima Rahmadani | Tolerant Retrieval Specialist| Menangani wildcard & spelling correction |
+| 6182301094 | Bima Rahmadani | Tolerant Retrieval Specialist| Tolerant Retrieval dengan levenshtein distance|
 
 # Dataset
 Berikut merupakan dataset yang kami gunakan  
