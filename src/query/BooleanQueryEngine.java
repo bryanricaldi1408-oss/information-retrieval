@@ -175,19 +175,10 @@ public class BooleanQueryEngine {
     /**
      * UNION - operasi OR
      */
-    public List<Integer> union(List<Integer> pL1, List<Integer> pL2) {
-        List<Integer> answer = new ArrayList<>();
-        int p1 = 0, p2 = 0;
-
-        while (p1 < pL1.size() && p2 < pL2.size()) {
-            int d1 = pL1.get(p1), d2 = pL2.get(p2);
-            if      (d1 == d2) { answer.add(d1); p1++; p2++; }
-            else if (d1 <  d2) { answer.add(d1); p1++; }
-            else               { answer.add(d2); p2++; }
-        }
-        while (p1 < pL1.size()) answer.add(pL1.get(p1++));
-        while (p2 < pL2.size()) answer.add(pL2.get(p2++));
-        return answer;
+     public List<Integer> union(List<Integer> pL1, List<Integer> pL2) {
+        Set<Integer> set = new TreeSet<>(pL1);
+        set.addAll(pL2);
+        return new ArrayList<>(set);
     }
 
     /**
