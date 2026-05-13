@@ -32,5 +32,10 @@ https://www.kaggle.com/datasets/hhhoang/cranfield-dataset?resource=download
    **Note:** Penggunaan huruf kapital atau tidak dalam penulisan operator boolean tidak berpengaruh pada hasil pencarian.
 
 4. Untuk keluar dari progam ketik exit. Untuk mencari kata "exit" harus menggunakan
-   (exit)  
+   (exit)
+   Contoh :
+   ```
+   Query : (exit) -> untuk mencari kata exit
+   Query : exit   -> untuk keluar dari program
+   ```
   
